@@ -39,7 +39,7 @@ public class MockitoStubTest {
         Assert.assertThat(mockedList.get(0), is("first"));
 
         //following throws runtime exception
-//        System.out.println(mockedList.get(1));
+       // System.out.println(mockedList.get(1));
 
         //following prints "null" because get(999) was not stubbed
         Assert.assertNull(mockedList.get(999));

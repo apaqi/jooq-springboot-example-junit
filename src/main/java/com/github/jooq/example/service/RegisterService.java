@@ -3,7 +3,7 @@ package com.github.jooq.example.service;
 import com.github.jooq.example.data.ApiResponse;
 import com.github.jooq.example.data.ApiRetCode;
 import com.github.jooq.example.gen.tables.records.UserRecord;
-import com.github.jooq.example.proto.RegisterProto;
+import com.github.jooq.example.proto.RegisterReq;
 import com.github.jooq.example.util.PasswordUtil;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class RegisterService extends BaseService {
      *
      * @param registerReq
      */
-    public ApiResponse<String> register(RegisterProto.RegisterReq registerReq) {
+    public ApiResponse<String> register(RegisterReq registerReq) {
         if (StringUtils.isEmpty(registerReq.getUsername())) {
             return ApiResponse.fail(ApiRetCode.PARAMETER_EMPTY);
         }

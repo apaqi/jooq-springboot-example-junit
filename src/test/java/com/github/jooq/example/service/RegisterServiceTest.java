@@ -4,9 +4,7 @@ import com.github.jooq.example.data.ApiResponse;
 import com.github.jooq.example.data.ApiRetCode;
 import com.github.jooq.example.gen.tables.pojos.User;
 import com.github.jooq.example.gen.tables.records.UserRecord;
-import com.github.jooq.example.proto.RegisterProto;
-import com.github.jooq.example.service.RegisterService;
-import com.github.jooq.example.service.UserService;
+import com.github.jooq.example.proto.RegisterReq;
 import com.github.jooq.example.util.PasswordUtil;
 import org.jooq.DSLContext;
 import org.junit.Assert;
@@ -35,7 +33,7 @@ public class RegisterServiceTest {
     @Test
     public void should_response_fail_with_empty_username() {
         RegisterService registerService = new RegisterService(mock(UserService.class), mock(DSLContext.class));
-        RegisterProto.RegisterReq registerReq = RegisterProto.RegisterReq.builder().username("").password("123456").build();
+        RegisterReq registerReq = RegisterReq.builder().username("").password("123456").build();
         ApiResponse<String> response = registerService.register(registerReq);
 
         assertThat(response.getCode(), is(ApiRetCode.PARAMETER_EMPTY.getCode()));
@@ -44,7 +42,7 @@ public class RegisterServiceTest {
     @Test
     public void should_response_password_invalid_with_non_6_digits_pwd() {
         RegisterService registerService = new RegisterService(mock(UserService.class), mock(DSLContext.class));
-        RegisterProto.RegisterReq registerReq = RegisterProto.RegisterReq.builder().username("test").password("aaa456").build();
+        RegisterReq registerReq = RegisterReq.builder().username("test").password("aaa456").build();
         ApiResponse<String> response = registerService.register(registerReq);
 
         assertThat(response.getCode(), is(ApiRetCode.INVALID_SHORT_PASSWORD.getCode()));
@@ -59,7 +57,7 @@ public class RegisterServiceTest {
         when(userService.findByMobile(anyString())).thenReturn(users);
 
         RegisterService registerService = new RegisterService(userService, mock(DSLContext.class));
-        RegisterProto.RegisterReq registerReq = RegisterProto.RegisterReq.builder().username("test").password("123456").build();
+        RegisterReq registerReq = RegisterReq.builder().username("test").password("123456").build();
         ApiResponse<String> response = registerService.register(registerReq);
 
         assertThat(response.getCode(), is(ApiRetCode.USER_EXISTED.getCode()));
@@ -77,7 +75,7 @@ public class RegisterServiceTest {
         when(userService.findByMobile(anyString())).thenReturn(users);
 
         RegisterService registerService = new RegisterService(userService, mock(DSLContext.class));
-        RegisterProto.RegisterReq registerReq = RegisterProto.RegisterReq.builder().username("test").password("123456").build();
+        RegisterReq registerReq = RegisterReq.builder().username("test").password("123456").build();
         ApiResponse<String> response = registerService.register(registerReq);
 
         UserRecord user = new UserRecord();
@@ -99,7 +97,7 @@ public class RegisterServiceTest {
         PowerMockito.when(PasswordUtil.isValidShortPassword(anyString())).thenReturn(false);
 
         RegisterService registerService = new RegisterService(mock(UserService.class), mock(DSLContext.class));
-        RegisterProto.RegisterReq registerReq = RegisterProto.RegisterReq.builder().username("test").password("123456").build();
+        RegisterReq registerReq = RegisterReq.builder().username("test").password("123456").build();
         ApiResponse<String> response = registerService.register(registerReq);
         Assert.assertEquals(response.getCode(), ApiRetCode.INVALID_SHORT_PASSWORD.getCode());
     }

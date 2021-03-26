@@ -4,7 +4,7 @@ import com.github.jooq.example.data.ApiResponse;
 import com.github.jooq.example.data.Page;
 import com.github.jooq.example.gen.tables.pojos.User;
 import com.github.jooq.example.gen.tables.records.UserRecord;
-import com.github.jooq.example.proto.RegisterProto.RegisterReq;
+import com.github.jooq.example.proto.RegisterReq;
 import com.github.jooq.example.service.RegisterService;
 import com.github.jooq.example.service.UserService;
 import io.swagger.annotations.Api;
